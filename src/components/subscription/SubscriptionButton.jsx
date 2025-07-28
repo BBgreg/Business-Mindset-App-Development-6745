@@ -1,37 +1,32 @@
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import React, {useState} from 'react'
+import {motion} from 'framer-motion'
 import SafeIcon from '../../common/SafeIcon'
 import * as FiIcons from 'react-icons/fi'
-import { supabaseService } from '../../services/supabaseService'
 import LoadingSpinner from '../LoadingSpinner'
 
-const { FiCreditCard, FiCheck } = FiIcons
+const {FiCreditCard, FiCheck, FiExternalLink} = FiIcons
 
-const SubscriptionButton = ({ user, isPremium, onUpgrade }) => {
+const SubscriptionButton = ({user, isPremium, onUpgrade, paymentLink}) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
 
   const handleUpgrade = async () => {
     if (!user) {
-      setError('Please sign in to upgrade')
+      onUpgrade()
       return
     }
 
     setIsLoading(true)
-    setError('')
-
+    
     try {
-      const { sessionId, url } = await supabaseService.createCheckoutSession(user.id)
-      
-      if (url) {
-        // Redirect to Stripe Checkout
-        window.location.href = url
+      // Open Stripe payment link in new tab
+      if (paymentLink) {
+        window.open(paymentLink, '_blank')
       } else {
-        throw new Error('Failed to create checkout session')
+        // Fallback to existing upgrade flow
+        onUpgrade()
       }
     } catch (error) {
-      console.error('Error creating checkout session:', error)
-      setError(error.message || 'Failed to start checkout process')
+      console.error('Error opening payment link:', error)
     } finally {
       setIsLoading(false)
     }
@@ -41,7 +36,7 @@ const SubscriptionButton = ({ user, isPremium, onUpgrade }) => {
     return (
       <motion.button
         className="w-full bg-success-100 text-success-800 py-3 rounded-lg font-semibold cursor-default flex items-center justify-center space-x-2"
-        whileHover={{ scale: 1.02 }}
+        whileHover={{scale: 1.02}}
       >
         <SafeIcon icon={FiCheck} />
         <span>Premium Active</span>
@@ -55,24 +50,18 @@ const SubscriptionButton = ({ user, isPremium, onUpgrade }) => {
         onClick={handleUpgrade}
         disabled={isLoading}
         className="w-full bg-warning-500 text-white py-3 rounded-lg font-semibold hover:bg-warning-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center space-x-2"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{scale: 1.02}}
+        whileTap={{scale: 0.98}}
       >
         {isLoading ? (
           <LoadingSpinner size="sm" color="white" />
         ) : (
           <>
-            <SafeIcon icon={FiCreditCard} />
+            <SafeIcon icon={paymentLink ? FiExternalLink : FiCreditCard} />
             <span>Upgrade to Premium</span>
           </>
         )}
       </motion.button>
-      
-      {error && (
-        <div className="mt-2 bg-red-50 border border-red-200 rounded-lg p-3">
-          <p className="text-red-700 text-sm">{error}</p>
-        </div>
-      )}
     </div>
   )
 }
