@@ -25,9 +25,9 @@ const Footer = () => {
                 <h3 className="text-lg font-bold font-heading">
                   Master Business Owner Mindset
                 </h3>
-                <h3 className="text-lg font-bold font-heading">
-                  With the Growth & Profit Blueprint
-                </h3>
+                <h2 className="text-lg font-bold font-heading">
+                  with the Growth & Profit Blueprint
+                </h2>
                 <p className="text-sm text-gray-400">Powered by Greg Head</p>
               </div>
             </div>
