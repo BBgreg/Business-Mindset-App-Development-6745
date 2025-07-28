@@ -7,6 +7,7 @@ import ExploreMindset from './components/sections/ExploreMindset';
 import AIChatbot from './components/sections/AIChatbot';
 import PremiumFeatures from './components/sections/PremiumFeatures';
 import AuthModal from './components/auth/AuthModal';
+import { supabase } from './lib/supabase';
 import { supabaseService } from './services/supabaseService';
 import { gregHeadKnowledgeBase } from './data/gregHeadKnowledgeBase';
 import './App.css';
@@ -27,29 +28,60 @@ function App() {
 
   // Initialize authentication listener
   useEffect(() => {
-    const { data: { subscription } } = supabaseService.subscribeToAuthChanges(
+    console.log("Setting up auth listener");
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log("Auth state changed:", event, session?.user?.id);
+        
         if (session?.user) {
+          console.log("User is authenticated:", session.user);
           setUser(session.user);
           await handleUserLogin(session.user.id);
         } else {
+          console.log("No authenticated user");
           setUser(null);
           setUserProfile(null);
           setIsPremiumUser(false);
           setChatHistory([]);
         }
+        
         setIsAuthReady(true);
       }
     );
 
-    return () => subscription?.unsubscribe();
+    // Check for existing session on mount
+    const checkExistingSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          console.log("Existing session found:", session.user);
+          setUser(session.user);
+          await handleUserLogin(session.user.id);
+        }
+      } catch (error) {
+        console.error("Error checking session:", error);
+      } finally {
+        setIsAuthReady(true);
+      }
+    };
+
+    checkExistingSession();
+
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, []);
 
   // Handle user login - fetch profile and subscription
   const handleUserLogin = async (userId) => {
     try {
+      console.log("Handling user login for:", userId);
+      
       // Fetch or create user profile
       const profile = await supabaseService.fetchOrCreateUserProfile(userId);
+      console.log("User profile:", profile);
+      
       setUserProfile(profile);
       setIsPremiumUser(profile?.is_premium || false);
 
@@ -61,12 +93,16 @@ function App() {
         content: msg.content,
         timestamp: new Date(msg.created_at)
       }));
+      
       setChatHistory(formattedMessages);
 
       // Check subscription status
       const subscription = await supabaseService.checkUserSubscription(userId);
+      console.log("Subscription status:", subscription);
+      
       if (subscription) {
         setIsPremiumUser(true);
+        
         // Update profile if needed
         if (!profile?.is_premium) {
           await supabaseService.updateUserProfile(userId, { is_premium: true });
@@ -105,7 +141,7 @@ function App() {
       setShowAuthModal(true);
       return;
     }
-
+    
     try {
       // Add user message to chat
       const userMessage = {
@@ -114,6 +150,7 @@ function App() {
         content: message,
         timestamp: new Date()
       };
+      
       setChatHistory(prev => [...prev, userMessage]);
 
       // Save user message to database
@@ -127,6 +164,7 @@ function App() {
         role: msg.type === 'user' ? 'user' : 'assistant',
         content: msg.content
       }));
+      
       aiChatHistory.push({ role: 'user', content: message });
 
       // Get AI response
@@ -143,8 +181,12 @@ function App() {
         content: aiResponse,
         timestamp: new Date()
       };
+      
       setChatHistory(prev => [...prev, aiMessage]);
-
+      
+      // Save AI message to database
+      await supabaseService.saveChatMessage(user.id, 'assistant', aiResponse);
+      
     } catch (error) {
       console.error('Error sending chat message:', error);
       
@@ -155,6 +197,7 @@ function App() {
         content: "I apologize, but I'm having trouble generating a response right now. Please try again or contact support if the issue persists.",
         timestamp: new Date()
       };
+      
       setChatHistory(prev => [...prev, errorMessage]);
     }
   };
@@ -165,17 +208,16 @@ function App() {
       setShowAuthModal(true);
       return null;
     }
-
+    
     try {
       const systemPrompt = createSystemPrompt(knowledgeBase, userProfile);
       const chatHistory = [{ role: 'user', content: query }];
-      
       const response = await supabaseService.generateAIResponse(
         chatHistory,
         systemPrompt,
         user.id
       );
-
+      
       return response;
     } catch (error) {
       console.error('Error generating AI insight:', error);
@@ -189,26 +231,21 @@ function App() {
       setShowAuthModal(true);
       return;
     }
-
+    
     try {
-      const { sessionId, url } = await supabaseService.createCheckoutSession(user.id);
-      
-      if (url) {
-        // Redirect to Stripe Checkout
-        window.location.href = url;
-      } else {
-        throw new Error('Failed to create checkout session');
-      }
+      // Use direct Stripe link for reliability
+      const stripePaymentLink = "https://buy.stripe.com/14A14n60Tf334UP9ihfUQ00";
+      window.open(stripePaymentLink, '_blank');
     } catch (error) {
-      console.error('Error creating checkout session:', error);
-      alert('Failed to start checkout process. Please try again.');
+      console.error('Error opening payment link:', error);
+      alert('Failed to open payment page. Please try again.');
     }
   };
 
   // Clear chat history
   const handleClearChatHistory = async () => {
     if (!user) return;
-
+    
     try {
       await supabaseService.clearChatHistory(user.id);
       setChatHistory([]);
@@ -219,9 +256,7 @@ function App() {
 
   // Create system prompt with knowledge base
   const createSystemPrompt = (knowledgeBase, userProfile) => {
-    return `You are Greg Head, a seasoned business advisor and former family office founder who has built, scaled, and sold dozens of businesses. You speak directly and practically, using real-world examples and analogies. You've walked the same path as the business owners you advise.
-
-Your expertise includes:
+    return `You are Greg Head, a seasoned business advisor and former family office founder who has built, scaled, and sold dozens of businesses. You speak directly and practically, using real-world examples and analogies. You've walked the same path as the business owners you advise. Your expertise includes:
 - The 5 Challenges Business Owners Face
 - The 12 Business Drivers Framework (Revenue, Profit, Cash Flow)
 - Practical, actionable advice over theoretical concepts
@@ -241,11 +276,10 @@ Key principles:
 - Measure everything you can, ignore what you can't measure
 - Business owners need practical plans, not more theory
 
-Knowledge Base Context:
-${JSON.stringify(knowledgeBase, null, 2)}
-
-User Profile Context:
-${userProfile ? JSON.stringify(userProfile, null, 2) : 'Anonymous user'}
+User Profile Context: ${userProfile ? JSON.stringify({ 
+  username: userProfile.username, 
+  isPremium: userProfile.is_premium 
+}, null, 2) : 'Anonymous user'}
 
 Respond as Greg Head would - practical, direct, and focused on actionable insights that will actually help this business owner. Keep responses conversational and under 500 words.`;
   };
@@ -257,7 +291,7 @@ Respond as Greg Head would - practical, direct, and focused on actionable insigh
         return <ExploreMindset knowledgeBase={knowledgeBase} />;
       case 'chatbot':
         return (
-          <AIChatbot 
+          <AIChatbot
             user={user}
             chatHistory={chatHistory}
             onSendMessage={handleChatSendMessage}
@@ -267,7 +301,7 @@ Respond as Greg Head would - practical, direct, and focused on actionable insigh
         );
       case 'premium':
         return (
-          <PremiumFeatures 
+          <PremiumFeatures
             isPremiumUser={isPremiumUser}
             user={user}
             onGoPremium={handleGoPremium}
@@ -295,7 +329,7 @@ Respond as Greg Head would - practical, direct, and focused on actionable insigh
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header 
+      <Header
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         user={user}
@@ -320,9 +354,9 @@ Respond as Greg Head would - practical, direct, and focused on actionable insigh
       </main>
       
       <Footer />
-
+      
       {/* Auth Modal */}
-      <AuthModal 
+      <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
         onSuccess={handleAuthSuccess}

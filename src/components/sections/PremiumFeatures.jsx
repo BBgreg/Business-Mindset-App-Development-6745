@@ -1,40 +1,71 @@
-import React from 'react';
-import {motion} from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
-import PricingSection from './PricingSection';
+import OptimizedPricingSection from './OptimizedPricingSection';
+import CheckoutModal from '../checkout/CheckoutModal';
 
-const {FiStar, FiCheck, FiX, FiArrowRight, FiLock, FiUnlock, FiTrendingUp, FiUsers, FiBookOpen, FiVideo} = FiIcons;
+const { FiStar, FiCheck, FiX, FiArrowRight, FiLock, FiUnlock, FiTrendingUp, FiUsers, FiBookOpen, FiVideo, FiZap, FiTarget, FiHeadphones } = FiIcons;
 
-const PremiumFeatures = ({isPremiumUser, user, onGoPremium, onAuthRequired}) => {
+const PremiumFeatures = ({ isPremiumUser, user, onGoPremium, onAuthRequired }) => {
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+
   const features = [
+    {
+      icon: FiZap,
+      title: "Unlimited AI Coaching",
+      description: "24/7 access to Greg Head's AI-powered business advisor trained on his complete methodology",
+      free: true,
+      premium: true,
+      highlight: "Always available"
+    },
     {
       icon: FiTrendingUp,
       title: "Advanced Business Assessment",
       description: "Complete evaluation using Greg's 300+ data point framework to identify profit leaks and growth opportunities",
       free: false,
-      premium: true
+      premium: true,
+      highlight: "300+ data points"
     },
     {
-      icon: FiBookOpen,
+      icon: FiTarget,
       title: "Personalized Action Plans",
       description: "Custom roadmaps based on your specific business challenges with step-by-step implementation guides",
       free: false,
-      premium: true
+      premium: true,
+      highlight: "Custom roadmaps"
     },
     {
       icon: FiUsers,
       title: "Monthly Group Coaching",
       description: "Live sessions with Greg Head and peer business owners tackling similar challenges",
       free: false,
-      premium: true
+      premium: true,
+      highlight: "Live with Greg"
     },
     {
       icon: FiVideo,
       title: "Exclusive Video Library",
       description: "Access to Greg's complete training modules on the 12 Business Drivers and implementation strategies",
       free: false,
-      premium: true
+      premium: true,
+      highlight: "Complete library"
+    },
+    {
+      icon: FiBookOpen,
+      title: "Implementation Playbooks",
+      description: "Step-by-step guides for implementing each of the 12 Business Drivers in your specific industry",
+      free: false,
+      premium: true,
+      highlight: "Industry-specific"
+    },
+    {
+      icon: FiHeadphones,
+      title: "Priority Support",
+      description: "Direct access to our business coaching team for personalized guidance and troubleshooting",
+      free: false,
+      premium: true,
+      highlight: "Direct access"
     }
   ];
 
@@ -43,7 +74,7 @@ const PremiumFeatures = ({isPremiumUser, user, onGoPremium, onAuthRequired}) => 
       onAuthRequired();
       return;
     }
-    onGoPremium();
+    setShowCheckoutModal(true);
   };
 
   return (
@@ -52,8 +83,8 @@ const PremiumFeatures = ({isPremiumUser, user, onGoPremium, onAuthRequired}) => 
         {/* Header */}
         <motion.div 
           className="text-center mb-16"
-          initial={{opacity: 0, y: -20}}
-          animate={{opacity: 1, y: 0}}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
         >
           <div className="inline-flex items-center space-x-2 bg-warning-100 text-warning-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <SafeIcon icon={FiStar} className="text-sm" />
@@ -70,60 +101,144 @@ const PremiumFeatures = ({isPremiumUser, user, onGoPremium, onAuthRequired}) => 
           </p>
         </motion.div>
 
-        {/* Premium Features Grid */}
+        {/* Premium vs Free Comparison */}
         <motion.section 
           className="mb-20"
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.2}}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
         >
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12 font-heading">
-            What You Get with Premium
+            What's Included
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
-                initial={{opacity: 0, y: 20}}
-                animate={{opacity: 1, y: 0}}
-                transition={{delay: 0.1 * index}}
-                whileHover={{y: -5}}
-              >
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-warning-500 to-warning-600 rounded-xl flex items-center justify-center">
-                    <SafeIcon icon={feature.icon} className="text-white text-xl" />
+          
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              {/* Header */}
+              <div className="grid grid-cols-3 bg-gray-50 border-b border-gray-200">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900">Features</h3>
+                </div>
+                <div className="p-6 text-center border-l border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900">Free</h3>
+                  <p className="text-sm text-gray-600 mt-1">Basic access</p>
+                </div>
+                <div className="p-6 text-center border-l border-gray-200 bg-warning-50">
+                  <h3 className="text-lg font-semibold text-warning-800">Premium</h3>
+                  <p className="text-sm text-warning-600 mt-1">Complete transformation</p>
+                </div>
+              </div>
+
+              {/* Features */}
+              {features.map((feature, index) => (
+                <div key={index} className="grid grid-cols-3 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                  <div className="p-6">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <SafeIcon icon={feature.icon} className="text-primary-600 text-sm" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900 mb-1">
+                          {feature.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          {feature.description}
+                        </p>
+                        {feature.highlight && (
+                          <div className="inline-block bg-primary-100 text-primary-700 px-2 py-1 rounded text-xs font-medium mt-2">
+                            {feature.highlight}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 font-heading">
-                      {feature.title}
-                    </h3>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <SafeIcon icon={FiStar} className="text-warning-500 text-sm" />
-                      <span className="text-sm text-warning-600 font-medium">Premium Only</span>
+                  
+                  <div className="p-6 flex items-center justify-center border-l border-gray-200">
+                    {feature.free ? (
+                      <SafeIcon icon={FiCheck} className="text-success-500 text-xl" />
+                    ) : (
+                      <SafeIcon icon={FiX} className="text-gray-300 text-xl" />
+                    )}
+                  </div>
+                  
+                  <div className="p-6 flex items-center justify-center border-l border-gray-200 bg-warning-50">
+                    <SafeIcon icon={FiCheck} className="text-warning-600 text-xl" />
+                  </div>
+                </div>
+              ))}
+
+              {/* Pricing Row */}
+              <div className="grid grid-cols-3 bg-gray-50">
+                <div className="p-6">
+                  <h4 className="font-semibold text-gray-900">Investment</h4>
+                </div>
+                <div className="p-6 text-center border-l border-gray-200">
+                  <span className="text-2xl font-bold text-gray-900">$0</span>
+                  <p className="text-sm text-gray-600">Forever</p>
+                </div>
+                <div className="p-6 text-center border-l border-gray-200 bg-warning-50">
+                  <div className="space-y-2">
+                    <div className="flex items-baseline justify-center space-x-2">
+                      <span className="text-lg text-gray-500 line-through">$297</span>
+                      <span className="text-2xl font-bold text-warning-800">$97</span>
+                      <span className="text-sm text-gray-600">/month</span>
+                    </div>
+                    <div className="bg-danger-100 text-danger-700 px-2 py-1 rounded text-xs font-medium">
+                      67% off - Limited time
                     </div>
                   </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
+              </div>
+
+              {/* CTA Row */}
+              <div className="grid grid-cols-3">
+                <div className="p-6"></div>
+                <div className="p-6 border-l border-gray-200">
+                  <button 
+                    disabled
+                    className="w-full bg-gray-100 text-gray-500 py-2 rounded-lg font-medium cursor-not-allowed"
+                  >
+                    Current Plan
+                  </button>
+                </div>
+                <div className="p-6 border-l border-gray-200 bg-warning-50">
+                  {isPremiumUser ? (
+                    <div className="text-center">
+                      <div className="flex items-center justify-center space-x-2 bg-success-100 text-success-800 py-2 rounded-lg font-medium">
+                        <SafeIcon icon={FiCheck} />
+                        <span>Active</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <motion.button
+                      onClick={handleUpgradeClick}
+                      className="w-full bg-warning-500 text-white py-2 rounded-lg font-medium hover:bg-warning-600 transition-colors"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Upgrade Now
+                    </motion.button>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </motion.section>
 
         {/* Pricing Section */}
-        <PricingSection 
-          user={user}
-          onAuthRequired={onAuthRequired}
-        />
+        {!isPremiumUser && (
+          <OptimizedPricingSection 
+            user={user} 
+            onAuthRequired={onAuthRequired}
+          />
+        )}
 
         {/* Access Status */}
         <motion.section 
           className="text-center mt-16"
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.6}}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
         >
           <div className={`inline-flex items-center space-x-3 px-6 py-4 rounded-2xl text-lg font-medium ${
             isPremiumUser 
@@ -135,7 +250,7 @@ const PremiumFeatures = ({isPremiumUser, user, onGoPremium, onAuthRequired}) => 
               {isPremiumUser 
                 ? 'You have Premium Access!' 
                 : user 
-                  ? 'Upgrade to unlock all features'
+                  ? 'Upgrade to unlock all features' 
                   : 'Sign in to access premium features'
               }
             </span>
@@ -150,9 +265,9 @@ const PremiumFeatures = ({isPremiumUser, user, onGoPremium, onAuthRequired}) => 
         {/* Testimonial Section */}
         <motion.section 
           className="mt-20"
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.8}}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
         >
           <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-3xl p-12 text-white text-center">
             <blockquote className="text-2xl md:text-3xl font-bold mb-6 italic leading-relaxed">
@@ -170,6 +285,14 @@ const PremiumFeatures = ({isPremiumUser, user, onGoPremium, onAuthRequired}) => 
           </div>
         </motion.section>
       </div>
+
+      {/* Checkout Modal */}
+      <CheckoutModal
+        isOpen={showCheckoutModal}
+        onClose={() => setShowCheckoutModal(false)}
+        user={user}
+        onAuthRequired={onAuthRequired}
+      />
     </div>
   );
 };

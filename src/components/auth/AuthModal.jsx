@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SafeIcon from '../../common/SafeIcon'
 import * as FiIcons from 'react-icons/fi'
-import { supabaseService } from '../../services/supabaseService'
+import { supabase } from '../../lib/supabase'
 import LoadingSpinner from '../LoadingSpinner'
 
 const { FiX, FiMail, FiLock, FiUser, FiEye, FiEyeOff } = FiIcons
@@ -19,10 +19,7 @@ const AuthModal = ({ isOpen, onClose, onSuccess }) => {
   const [error, setError] = useState('')
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    setFormData({ ...formData, [e.target.name]: e.target.value })
     setError('')
   }
 
@@ -39,28 +36,42 @@ const AuthModal = ({ isOpen, onClose, onSuccess }) => {
         if (formData.password.length < 6) {
           throw new Error('Password must be at least 6 characters')
         }
-        
-        await supabaseService.signUp(formData.email, formData.password)
-        onSuccess()
-        onClose()
+
+        // Sign up with Supabase directly
+        const { data, error: signUpError } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+        })
+
+        if (signUpError) throw signUpError
+
+        // Wait a moment to ensure profile creation completes
+        setTimeout(() => {
+          onSuccess()
+          onClose()
+        }, 1000)
       } else {
-        await supabaseService.signIn(formData.email, formData.password)
+        // Sign in with Supabase directly
+        const { data, error: signInError } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        })
+
+        if (signInError) throw signInError
+
         onSuccess()
         onClose()
       }
     } catch (error) {
-      setError(error.message)
+      console.error('Auth error:', error)
+      setError(error.message || 'Authentication failed')
     } finally {
       setIsLoading(false)
     }
   }
 
   const resetForm = () => {
-    setFormData({
-      email: '',
-      password: '',
-      confirmPassword: ''
-    })
+    setFormData({ email: '', password: '', confirmPassword: '' })
     setError('')
   }
 
@@ -108,9 +119,9 @@ const AuthModal = ({ isOpen, onClose, onSuccess }) => {
                 Email Address
               </label>
               <div className="relative">
-                <SafeIcon 
-                  icon={FiMail} 
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" 
+                <SafeIcon
+                  icon={FiMail}
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                 />
                 <input
                   type="email"
@@ -130,9 +141,9 @@ const AuthModal = ({ isOpen, onClose, onSuccess }) => {
                 Password
               </label>
               <div className="relative">
-                <SafeIcon 
-                  icon={FiLock} 
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" 
+                <SafeIcon
+                  icon={FiLock}
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                 />
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -160,9 +171,9 @@ const AuthModal = ({ isOpen, onClose, onSuccess }) => {
                   Confirm Password
                 </label>
                 <div className="relative">
-                  <SafeIcon 
-                    icon={FiLock} 
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" 
+                  <SafeIcon
+                    icon={FiLock}
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                   />
                   <input
                     type={showPassword ? 'text' : 'password'}
