@@ -39,10 +39,15 @@ const Header = ({
               <SafeIcon icon={FiBrain} className="text-white text-xl" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 font-heading">
+              <h1 className="text-lg font-bold text-gray-900 font-heading">
                 Master Business Owner Mindset
               </h1>
-              <p className="text-xs text-gray-500">with Greg Head</p>
+              <div className="text-md font-bold text-gray-800">
+                The Growth & Profit Blueprint
+              </div>
+              <div className="text-sm font-medium text-gray-600">
+                Powered by Greg Head
+              </div>
             </div>
           </motion.div>
 

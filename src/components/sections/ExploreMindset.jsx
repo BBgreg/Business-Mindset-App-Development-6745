@@ -1,24 +1,19 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import {motion} from 'framer-motion';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiAlertTriangle, FiTrendingUp, FiDollarSign, FiTarget, FiArrowRight, FiCheck } = FiIcons;
+const {FiAlertTriangle, FiTrendingUp, FiDollarSign, FiTarget, FiArrowRight, FiCheck} = FiIcons;
 
-const ExploreMindset = ({ knowledgeBase }) => {
+const ExploreMindset = ({knowledgeBase}) => {
   const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
+    hidden: {opacity: 0},
+    visible: {opacity: 1, transition: {staggerChildren: 0.1}}
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    hidden: {opacity: 0, y: 20},
+    visible: {opacity: 1, y: 0}
   };
 
   return (
@@ -27,9 +22,9 @@ const ExploreMindset = ({ knowledgeBase }) => {
         {/* Hero Section */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{opacity: 0, y: -20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.6}}
         >
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 font-heading">
             Master the{' '}
@@ -38,8 +33,10 @@ const ExploreMindset = ({ knowledgeBase }) => {
             </span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Stop being the most valuable employee in your company and start being a true business owner. 
-            Learn the framework that transforms struggling businesses into profitable, scalable assets.
+            Stop being the most valuable employee in your company and start being a true business owner.
+          </p>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Mindset and Blueprint that transforms struggling businesses into profitable growth engines, scalable assets.
           </p>
         </motion.div>
 
@@ -59,7 +56,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
               The 5 Challenges Every Business Owner Faces
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              These are the core issues keeping you trapped in your business instead of truly owning it.
+              The core issues keeping you trapped in your business.
             </p>
           </motion.div>
 
@@ -69,7 +66,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
                 key={challenge.id}
                 className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
                 variants={itemVariants}
-                whileHover={{ y: -5 }}
+                whileHover={{y: -5}}
               >
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="w-10 h-10 bg-gradient-to-r from-danger-500 to-danger-600 rounded-xl flex items-center justify-center text-white font-bold">
@@ -90,6 +87,35 @@ const ExploreMindset = ({ knowledgeBase }) => {
               </motion.div>
             ))}
           </div>
+
+          {/* Key Areas Include */}
+          <motion.div className="mt-12 text-center" variants={itemVariants}>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 font-heading">
+              Key Areas Include:
+            </h3>
+            <ul className="text-left max-w-3xl mx-auto space-y-3 text-lg text-gray-700">
+              <li className="flex items-start space-x-3">
+                <SafeIcon icon={FiCheck} className="text-success-500 text-xl mt-1 flex-shrink-0" />
+                <span>Business Owner Dependency: Your business relies heavily on you, the owner.</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <SafeIcon icon={FiCheck} className="text-success-500 text-xl mt-1 flex-shrink-0" />
+                <span>Catch-22 Situation for Growth: Stuck needing cash to grow, but can't grow without cash.</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <SafeIcon icon={FiCheck} className="text-success-500 text-xl mt-1 flex-shrink-0" />
+                <span>Lacks a simple way to understand what's working and what's not working in their business.</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <SafeIcon icon={FiCheck} className="text-success-500 text-xl mt-1 flex-shrink-0" />
+                <span>Fear of Failing: Failure-Proof Your Mindset and unfreeze your business.</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <SafeIcon icon={FiCheck} className="text-success-500 text-xl mt-1 flex-shrink-0" />
+                <span>Lack of Success: Know what to do to get out of survival mode to have a growing and successful business.</span>
+              </li>
+            </ul>
+          </motion.div>
         </motion.section>
 
         {/* 12 Business Drivers Section */}
@@ -108,7 +134,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
               The 12 Business Drivers That Actually Matter
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Focus on these drivers to transform your business from a demanding job into a profitable, valuable asset.
+              The operational and financial levers that transform your business from a demanding job into a growth machine.
             </p>
           </motion.div>
 
@@ -128,7 +154,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
                 <motion.div
                   key={index}
                   className="bg-white rounded-xl p-6 shadow-md border border-gray-100"
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{scale: 1.02}}
                 >
                   <h4 className="text-lg font-semibold text-gray-900 mb-3 font-heading">
                     {driver.name}
@@ -155,7 +181,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
                 <h3 className="text-2xl font-bold font-heading">Profit Drivers</h3>
               </div>
               <p className="text-success-100 text-lg">
-                Control these expenses to maximize what you keep from every dollar earned.
+                Drivers and Levers that directly impact how much money you make.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -163,7 +189,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
                 <motion.div
                   key={index}
                   className="bg-white rounded-xl p-6 shadow-md border border-gray-100"
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{scale: 1.02}}
                 >
                   <h4 className="text-lg font-semibold text-gray-900 mb-3 font-heading">
                     {driver.name}
@@ -198,7 +224,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
                 <motion.div
                   key={index}
                   className="bg-white rounded-xl p-6 shadow-md border border-gray-100"
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{scale: 1.02}}
                 >
                   <h4 className="text-lg font-semibold text-gray-900 mb-3 font-heading">
                     {driver.name}
@@ -233,14 +259,13 @@ const ExploreMindset = ({ knowledgeBase }) => {
               Battle-tested wisdom from someone who's walked the same path and built profitable, scalable businesses.
             </p>
           </motion.div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {knowledgeBase.keyInsights.map((insight, index) => (
               <motion.div
                 key={index}
                 className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-white"
                 variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{scale: 1.02}}
               >
                 <h3 className="text-xl font-bold mb-4 text-primary-300 font-heading">
                   {insight.title}
@@ -258,23 +283,22 @@ const ExploreMindset = ({ knowledgeBase }) => {
 
         {/* CTA Section */}
         <motion.section
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+          className="text-center mb-16"
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{delay: 0.8}}
         >
           <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-3xl p-12 text-white">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">
               Ready to Master Your Business?
             </h2>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-              Get personalized insights and actionable advice using our AI-powered coaching system 
-              trained on Greg Head's proven methodologies.
+              Get personalized insights and actionable advice using our AI-powered coaching system trained on Greg Head's proven methodologies.
             </p>
             <motion.button
               className="bg-white text-primary-700 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors inline-flex items-center space-x-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{scale: 1.05}}
+              whileTap={{scale: 0.95}}
               onClick={() => window.dispatchEvent(new CustomEvent('navigate-to-chatbot'))}
             >
               <span>Get AI Insights Now</span>
@@ -282,6 +306,18 @@ const ExploreMindset = ({ knowledgeBase }) => {
             </motion.button>
           </div>
         </motion.section>
+
+        {/* Concluding Statement */}
+        <motion.div
+          className="text-center mb-8"
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{delay: 1.0}}
+        >
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
+            The Blueprint to have what you always wanted, more money and more time with the family.
+          </p>
+        </motion.div>
       </div>
     </div>
   );
