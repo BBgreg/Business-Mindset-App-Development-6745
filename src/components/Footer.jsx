@@ -25,10 +25,7 @@ const Footer = () => {
                 <h3 className="text-lg font-bold font-heading">
                   Master Business Owner Mindset
                 </h3>
-                <h3 className="text-md font-bold font-heading">
-                  with the Growth & Profit Blueprint
-                </h3>
-                <p className="text-sm text-gray-400">Powered by Greg Head</p>
+                <p className="text-sm text-gray-400">with Greg Head</p>
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
@@ -43,7 +40,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm flex items-center space-x-2">
-                  <span>5 most comon Business Owner Challenges</span>
+                  <span>5 Business Owner Challenges</span>
                   <SafeIcon icon={FiExternalLink} className="text-xs" />
                 </a>
               </li>
@@ -65,13 +62,12 @@ const Footer = () => {
           {/* Contact & Legal */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Connect</h4>
-            <div className="text-gray-400 text-md space-y-2">
-              <p>Built for business owners who want practical solutions, 
-                not more theory or numbers.</p>
+            <div className="text-gray-400 text-sm space-y-2">
+              <p>Built for business owners who want practical solutions, not more theory.</p>
               <p className="flex items-center space-x-2">
                 <span>Made with</span>
-                <SafeIcon icon={FiHeart} className="text-red-500 text-md" />
-                <span>for owners</span>
+                <SafeIcon icon={FiHeart} className="text-red-500 text-sm" />
+                <span>for entrepreneurs</span>
               </p>
             </div>
           </div>
@@ -80,7 +76,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2026 Master Business Owner Mindset with the Growth & Profit Blueprint. All rights reserved.
+            © 2024 Master Business Owner Mindset. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 sm:mt-0">
             <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">

@@ -1,18 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, {useState, useRef, useEffect} from 'react';
+import {motion, AnimatePresence} from 'framer-motion';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 import LoadingSpinner from '../LoadingSpinner';
 
-const { FiSend, FiBrain, FiUser, FiClock, FiMessageSquare, FiTrash2 } = FiIcons;
+const {FiSend, FiBrain, FiUser, FiClock, FiMessageSquare, FiTrash2} = FiIcons;
 
-const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthRequired }) => {
+const AIChatbot = ({user, chatHistory, onSendMessage, onClearHistory, onAuthRequired}) => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
   };
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
-
+    
     if (!user) {
       onAuthRequired();
       return;
@@ -30,7 +30,7 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
     const message = inputValue.trim();
     setInputValue('');
     setIsLoading(true);
-
+    
     try {
       await onSendMessage(message);
     } catch (error) {
@@ -62,37 +62,37 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
   ];
 
   const formatTime = (timestamp) => {
-    return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return timestamp.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{opacity: 0, y: -20}}
+          animate={{opacity: 1, y: 0}}
         >
           <div className="inline-flex items-center space-x-3 bg-primary-100 text-primary-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <SafeIcon icon={FiBrain} className="text-sm" />
-            <span>Business Owner Mindset Powered by Greg Head</span>
+            <span>AI-Powered Business Coaching</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-heading">
             Get Insights from Greg Head's Framework
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Ask questions about business Owner challenges, growth and profit strategies, or the 12 Business Drivers. 
-            Get practical, actionable advice in powered by Greg's experience and expertise.
+            Ask questions about business challenges, cash flow, growth strategies, or the 12 Business Drivers. 
+            Get practical, actionable advice in Greg's direct style.
           </p>
         </motion.div>
 
         {/* Chat Container */}
-        <motion.div 
+        <motion.div
           className="bg-white rounded-2xl shadow-lg overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{delay: 0.2}}
         >
           {/* Chat Header */}
           {user && chatHistory.length > 0 && (
@@ -117,10 +117,10 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
           <div className="h-96 md:h-[500px] overflow-y-auto p-6 space-y-6">
             {/* Initial AI Message */}
             {chatHistory.length === 0 && (
-              <motion.div 
+              <motion.div
                 className="flex justify-start"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{opacity: 0, y: 20}}
+                animate={{opacity: 1, y: 0}}
               >
                 <div className="flex space-x-3 max-w-[80%]">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 text-white flex items-center justify-center flex-shrink-0">
@@ -128,14 +128,11 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
                   </div>
                   <div className="bg-gray-100 rounded-2xl px-4 py-3">
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                      Hey there! I'm your AI advisor trained on Greg Head's Master Business Owner Mindset and Growth & Profit Blueprint. 
-                      I've got decades of battle-tested strategies to help you build a profitable, scalable business that doesn't depend on you.
+                      Hey there! I'm your AI advisor trained on Greg Head's Master Business Owner Mindset framework. I've got decades of battle-tested strategies to help you build a profitable, scalable business that doesn't depend on you.
 
-                      What's keeping you up at night as a business owner? Are you dealing with cash flow issues, 
-                      feeling trapped in your business, or struggling to understand what's really driving your profits?
+                      What's keeping you up at night as a business owner? Are you dealing with cash flow issues, feeling trapped in your business, or struggling to understand what's really driving your profits?
 
-                      Ask me anything about the 5 Business Owner Challenges or the 12 Business Drivers - 
-                      I'm here to give you practical, actionable solutions in Greg's direct, no-nonsense style.
+                      Ask me anything about the 5 Business Owner Challenges or the 12 Business Drivers - I'm here to give you practical, actionable insights in Greg's direct, no-nonsense style.
                     </p>
                   </div>
                 </div>
@@ -147,35 +144,52 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
               {chatHistory.map((message) => (
                 <motion.div
                   key={message.id}
-                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  className={`flex ${
+                    message.type === 'user' ? 'justify-end' : 'justify-start'
+                  }`}
+                  initial={{opacity: 0, y: 20}}
+                  animate={{opacity: 1, y: 0}}
+                  exit={{opacity: 0, y: -20}}
                 >
-                  <div className={`flex space-x-3 max-w-[80%] ${
-                    message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''
-                  }`}>
+                  <div
+                    className={`flex space-x-3 max-w-[80%] ${
+                      message.type === 'user'
+                        ? 'flex-row-reverse space-x-reverse'
+                        : ''
+                    }`}
+                  >
                     {/* Avatar */}
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      message.type === 'user' 
-                        ? 'bg-primary-500 text-white' 
-                        : 'bg-gradient-to-r from-gray-700 to-gray-800 text-white'
-                    }`}>
-                      <SafeIcon icon={message.type === 'user' ? FiUser : FiBrain} className="text-sm" />
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        message.type === 'user'
+                          ? 'bg-primary-500 text-white'
+                          : 'bg-gradient-to-r from-gray-700 to-gray-800 text-white'
+                      }`}
+                    >
+                      <SafeIcon
+                        icon={message.type === 'user' ? FiUser : FiBrain}
+                        className="text-sm"
+                      />
                     </div>
-                    
+
                     {/* Message Content */}
-                    <div className={`rounded-2xl px-4 py-3 ${
-                      message.type === 'user' 
-                        ? 'bg-primary-500 text-white' 
-                        : 'bg-gray-100 text-gray-900'
-                    }`}>
+                    <div
+                      className={`rounded-2xl px-4 py-3 ${
+                        message.type === 'user'
+                          ? 'bg-primary-500 text-white'
+                          : 'bg-gray-100 text-gray-900'
+                      }`}
+                    >
                       <p className="text-sm leading-relaxed whitespace-pre-wrap">
                         {message.content}
                       </p>
-                      <div className={`flex items-center space-x-1 mt-2 text-xs ${
-                        message.type === 'user' ? 'text-primary-100' : 'text-gray-500'
-                      }`}>
+                      <div
+                        className={`flex items-center space-x-1 mt-2 text-xs ${
+                          message.type === 'user'
+                            ? 'text-primary-100'
+                            : 'text-gray-500'
+                        }`}
+                      >
                         <SafeIcon icon={FiClock} className="text-xs" />
                         <span>{formatTime(message.timestamp)}</span>
                       </div>
@@ -187,10 +201,10 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
 
             {/* Loading Indicator */}
             {isLoading && (
-              <motion.div 
+              <motion.div
                 className="flex justify-start"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
               >
                 <div className="flex space-x-3 max-w-[80%]">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 text-white flex items-center justify-center">
@@ -219,8 +233,8 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
                     key={index}
                     onClick={() => setInputValue(question)}
                     className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-colors"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{scale: 1.02}}
+                    whileTap={{scale: 0.98}}
                   >
                     {question}
                   </motion.button>
@@ -237,65 +251,71 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Ask Greg about your business challenges..."
+                  placeholder={user ? "Type your message..." : "Please sign in to chat with Greg..."}
                   className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none"
                   rows="2"
-                  disabled={isLoading}
+                  disabled={isLoading || !user}
                 />
               </div>
               <motion.button
                 onClick={handleSendMessage}
-                disabled={!inputValue.trim() || isLoading}
+                disabled={!inputValue.trim() || isLoading || !user}
                 className="bg-primary-500 text-white p-3 rounded-xl hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{scale: 1.05}}
+                whileTap={{scale: 0.95}}
               >
                 <SafeIcon icon={FiSend} className="text-lg" />
               </motion.button>
             </div>
-            
             {!user && (
               <p className="text-xs text-gray-500 mt-2">
-                💡 Sign in to save your conversation history and access premium features
+                💡 Sign in to chat with Greg and get personalized business insights
               </p>
             )}
           </div>
         </motion.div>
 
         {/* Info Cards */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{delay: 0.4}}
         >
           <div className="bg-white rounded-xl p-6 shadow-md">
             <div className="flex items-center space-x-3 mb-3">
-              <SafeIcon icon={FiMessageSquare} className="text-primary-500 text-xl" />
+              <SafeIcon
+                icon={FiMessageSquare}
+                className="text-primary-500 text-xl"
+              />
               <h3 className="font-semibold text-gray-900">Ask Anything</h3>
             </div>
             <p className="text-sm text-gray-600">
               Get insights on the 5 Business Challenges, 12 Business Drivers, or any specific business issue you're facing.
             </p>
           </div>
-          
           <div className="bg-white rounded-xl p-6 shadow-md">
             <div className="flex items-center space-x-3 mb-3">
-              <SafeIcon icon={FiBrain} className="text-success-500 text-xl" />
+              <SafeIcon
+                icon={FiBrain}
+                className="text-success-500 text-xl"
+              />
               <h3 className="font-semibold text-gray-900">Greg's Voice</h3>
             </div>
             <p className="text-sm text-gray-600">
-              Trained on Greg Head's framework for practical, battle-tested solutions from someone who's walked your path.
+              Trained on Greg Head's methodology for practical, battle-tested advice from someone who's walked your path.
             </p>
           </div>
-          
           <div className="bg-white rounded-xl p-6 shadow-md">
             <div className="flex items-center space-x-3 mb-3">
-              <SafeIcon icon={FiClock} className="text-warning-500 text-xl" />
+              <SafeIcon
+                icon={FiClock}
+                className="text-warning-500 text-xl"
+              />
               <h3 className="font-semibold text-gray-900">Instant Insights</h3>
             </div>
             <p className="text-sm text-gray-600">
-              Get immediate, actionable solutions without waiting for appointments or lengthy consultations.
+              Get immediate, actionable advice without waiting for appointments or lengthy consultations.
             </p>
           </div>
         </motion.div>
