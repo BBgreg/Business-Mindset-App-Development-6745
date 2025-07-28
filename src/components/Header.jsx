@@ -43,10 +43,10 @@ const Header = ({
               <h2 className="text-xl font-bold text-gray-900 font-heading">
                 Master Business Owner Mindset
               </h2>
-               <h2 className="text-xl font-bold text-gray-900 font-heading">
-                with the Growth & Profit Blueprint
+               <h2 className="text-lg font-bold text-gray-900 font-heading">
+                The Growth & Profit Blueprint
               </h2>
-              <p className="text-xs text-gray-500">Powered by Greg Head</p>
+              <p className="text-sm text-gray-500">Powered by Greg Head</p>
             </div>
           </motion.div>
 
