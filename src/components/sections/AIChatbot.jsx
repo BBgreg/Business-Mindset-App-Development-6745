@@ -76,14 +76,14 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
         >
           <div className="inline-flex items-center space-x-3 bg-primary-100 text-primary-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <SafeIcon icon={FiBrain} className="text-sm" />
-            <span>AI-Powered Business Coaching</span>
+            <span>Business Owner Mindset Powered by Greg Head</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-heading">
             Get Insights from Greg Head's Framework
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Ask questions about business challenges, cash flow, growth strategies, or the 12 Business Drivers. 
-            Get practical, actionable advice in Greg's direct style.
+            Ask questions about business Owner challenges, growth and profit strategies, or the 12 Business Drivers. 
+            Get practical, actionable advice in powered by Greg's experience and expertise.
           </p>
         </motion.div>
 
@@ -128,14 +128,14 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
                   </div>
                   <div className="bg-gray-100 rounded-2xl px-4 py-3">
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                      Hey there! I'm your AI advisor trained on Greg Head's Master Business Owner Mindset framework. 
+                      Hey there! I'm your AI advisor trained on Greg Head's Master Business Owner Mindset and Growth & Profit Blueprint. 
                       I've got decades of battle-tested strategies to help you build a profitable, scalable business that doesn't depend on you.
 
                       What's keeping you up at night as a business owner? Are you dealing with cash flow issues, 
                       feeling trapped in your business, or struggling to understand what's really driving your profits?
 
                       Ask me anything about the 5 Business Owner Challenges or the 12 Business Drivers - 
-                      I'm here to give you practical, actionable insights in Greg's direct, no-nonsense style.
+                      I'm here to give you practical, actionable solutions in Greg's direct, no-nonsense style.
                     </p>
                   </div>
                 </div>
@@ -285,7 +285,7 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
               <h3 className="font-semibold text-gray-900">Greg's Voice</h3>
             </div>
             <p className="text-sm text-gray-600">
-              Trained on Greg Head's methodology for practical, battle-tested advice from someone who's walked your path.
+              Trained on Greg Head's framework for practical, battle-tested solutions from someone who's walked your path.
             </p>
           </div>
           
@@ -295,7 +295,7 @@ const AIChatbot = ({ user, chatHistory, onSendMessage, onClearHistory, onAuthReq
               <h3 className="font-semibold text-gray-900">Instant Insights</h3>
             </div>
             <p className="text-sm text-gray-600">
-              Get immediate, actionable advice without waiting for appointments or lengthy consultations.
+              Get immediate, actionable solutions without waiting for appointments or lengthy consultations.
             </p>
           </div>
         </motion.div>
