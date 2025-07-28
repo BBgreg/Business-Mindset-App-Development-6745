@@ -39,7 +39,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Stop being the most valuable employee in your company and start being a true business owner. 
-            Learn the framework that transforms struggling businesses into profitable, scalable assets.
+            Learn the Growth & Profit Bluepring and the Mindset framework that transforms struggling businesses into profitable, scalable assets.
           </p>
         </motion.div>
 
@@ -53,7 +53,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
           <motion.div className="text-center mb-12" variants={itemVariants}>
             <div className="inline-flex items-center space-x-2 bg-warning-100 text-warning-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
               <SafeIcon icon={FiAlertTriangle} className="text-sm" />
-              <span>Critical Business Owner Challenges</span>
+              <span>What are Your Critical Challenges as an Owner?</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-heading">
               The 5 Challenges Every Business Owner Faces
@@ -102,13 +102,13 @@ const ExploreMindset = ({ knowledgeBase }) => {
           <motion.div className="text-center mb-12" variants={itemVariants}>
             <div className="inline-flex items-center space-x-2 bg-success-100 text-success-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
               <SafeIcon icon={FiTrendingUp} className="text-sm" />
-              <span>The Solution Framework</span>
+              <span>The Growth & Profit Blueprint</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-heading">
               The 12 Business Drivers That Actually Matter
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Focus on these drivers to transform your business from a demanding job into a profitable, valuable asset.
+              Focus on these drivers to transform your business from a demanding job into a cash flow machine.
             </p>
           </motion.div>
 
@@ -155,7 +155,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
                 <h3 className="text-2xl font-bold font-heading">Profit Drivers</h3>
               </div>
               <p className="text-success-100 text-lg">
-                Control these expenses to maximize what you keep from every dollar earned.
+                Levers to to control to maximize what you keep from every dollar earned.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -268,8 +268,8 @@ const ExploreMindset = ({ knowledgeBase }) => {
               Ready to Master Your Business?
             </h2>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-              Get personalized insights and actionable advice using our AI-powered coaching system 
-              trained on Greg Head's proven methodologies.
+              Get personalized insights and actionable solutions using our Growth & Profit Blueprint powered by Greg Head's 
+              mindset mentor framework and proven methodologies.
             </p>
             <motion.button
               className="bg-white text-primary-700 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors inline-flex items-center space-x-2"
@@ -277,7 +277,7 @@ const ExploreMindset = ({ knowledgeBase }) => {
               whileTap={{ scale: 0.95 }}
               onClick={() => window.dispatchEvent(new CustomEvent('navigate-to-chatbot'))}
             >
-              <span>Get AI Insights Now</span>
+              <span>Freedom & Clarity Now</span>
               <SafeIcon icon={FiArrowRight} className="text-lg" />
             </motion.button>
           </div>
