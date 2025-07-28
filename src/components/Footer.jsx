@@ -26,7 +26,7 @@ const Footer = () => {
                   Master Business Owner Mindset
                 </h3>
                 <h3 className="text-lg font-bold font-heading">
-                  With the Growth & Profit Bluepring
+                  With the Growth & Profit Blueprint
                 </h3>
                 <p className="text-sm text-gray-400">Powered by Greg Head</p>
               </div>
@@ -79,7 +79,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2026 Master Business Owner Mindset wiht the Grow & Profit Blueprint. All rights reserved.
+            © 2026 Master Business Owner Mindset wiht the Growth & Profit Blueprint. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 sm:mt-0">
             <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
