@@ -40,9 +40,9 @@ const Header = ({
               <SafeIcon icon={FiBrain} className="text-white text-xl" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 font-heading">
+              <h2 className="text-xl font-bold text-gray-900 font-heading">
                 Master Business Owner Mindset
-              </h1>
+              </h2>
                <h2 className="text-xl font-bold text-gray-900 font-heading">
                 with the Growth & Profit Blueprint
               </h2>
